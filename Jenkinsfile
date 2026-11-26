@@ -1,6 +1,5 @@
 @Library("Shared") _
 pipeline{
-    
     agent { label "dev"};
     
     stages{
