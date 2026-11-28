@@ -1,34 +1,34 @@
 pipeline {
-    agent { label 'agent-1' }
+    agent { label "agent-1" }
 
     stages {
-        stage('Code Clone') {
+        stage("Code Clone") {
             steps {
-                git branch: 'master', url: 'https://github.com/Danish0703/two-tier-flaskapp.git'
+                git branch: "master", url: "https://github.com"
             }
         }
 
-        stage('Build') {
+        stage("Build") {
             steps {
                 sh "docker build -t two-tier-flaskapp ."
             }
         }
 
-        stage('Push to Docker Hub') {
+        stage("Push to Docker Hub") {
             steps {
                 withCredentials([usernamePassword(
-                    credentialsId: 'DockerHubCreds',
-                    usernameVariable: 'DOCKER_USER',
-                    passwordVariable: 'DOCKER_PASS'
+                    credentialsId: "DockerHubCreds",
+                    usernameVariable: "DOCKER_USER",
+                    passwordVariable: "DOCKER_PASS"
                 )]) {
-                       sh "docker login -u "$env.DOCKER_USER" -p "$env.DOCKER_PASS" "
-                       sh "docker image tag two-tier-flaskapp "${env.DOCKER_USER}"/two-tier-flaskapp"
-                       sh "docker push "$(env.DOCKER_USER)"/two-tier-flaskapp:latest"
+                    sh "docker login -u \"${DOCKER_USER}\" -p \"${DOCKER_PASS}\""
+                    sh "docker image tag two-tier-flaskapp \"${DOCKER_USER}\"/two-tier-flaskapp"
+                    sh "docker push \"${DOCKER_USER}\"/two-tier-flaskapp:latest"
                 }
             }
         }
 
-        stage('Deploy') {
+        stage("Deploy") {
             steps {
                 sh "docker compose up -d --build"
             }
