@@ -21,9 +21,9 @@ pipeline {
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
-                       sh 'docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"'
-                       sh 'docker image tag two-tier-flaskapp "${env.DOCKER_USER}"/two-tier-flaskapp'
-                       sh 'docker push "$(env.DOCKER_USER)"/two-tier-flaskapp:latest'
+                       sh "docker login -u "$env.DOCKER_USER" -p "$env.DOCKER_PASS" "
+                       sh "docker image tag two-tier-flaskapp "${env.DOCKER_USER}"/two-tier-flaskapp"
+                       sh "docker push "$(env.DOCKER_USER)"/two-tier-flaskapp:latest"
                 }
             }
         }
