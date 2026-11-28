@@ -1,11 +1,6 @@
 pipeline {
     agent { label 'agent-1' }
 
-    environment {
-        DOCKER_IMAGE = "<your-dockerhub-username>/two-tier-flask-app"
-        IMAGE_TAG    = "latest"
-    }
-
     stages {
         stage('Code Clone') {
             steps {
@@ -38,12 +33,6 @@ pipeline {
             steps {
                 sh "docker compose up -d --build"
             }
-        }
-    }
-
-    post {
-        always {
-            sh 'docker logout || true'
         }
     }
 }
