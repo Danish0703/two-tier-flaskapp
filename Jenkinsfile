@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage("Code Clone") {
             steps {
-                git branch: "master", url: "https://github.com"
+                git branch: "master", url: "https://github.com/Danish0703/two-tier-flaskapp"
             }
         }
 
